@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Soil Moisture Monitor</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Soil Moisture Monitor</h1>
+    <p>Temperature: {{ data[0].temperature }} F</p>
+    <p>Soil Moisture: {{ data[0].soil_moisture }} %</p>
+    <canvas id="soilMoistureChart" width="400" height="200"></canvas>
+    <script>
+        var ctx = document.getElementById('soilMoistureChart').getContext('2d');
+        var soilMoistureChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [{% for item in data %}"{{ item.timestamp }}",{% endfor %}],
+                datasets: [{
+                    label: 'Soil Moisture (%)',
+                    data: [{% for item in data %}{{ item.soil_moisture }},{% endfor %}],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'minute'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

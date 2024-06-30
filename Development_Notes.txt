@@ -1,0 +1,40 @@
+Pi-Pico:
+Reads soil moisture, PicoCPUtemp
+Send data to server
+
+Server:
+collects data from pico
+stores data in local database
+serves a webpage
+
+current or most recent data:
+graph of soil moisture overtime
+
+I have the code for running the pico and getting the soil moisture data:
+<code here>
+
+I am going to start this project on my laptop but I will ultimately have it running on a raspberry pi4.
+
+Select our code infrastructure:
+I liked FASTapi, jinja2, SQLite, and sqlalchemy, but if you think there are better tools I am all ears.
+
+##############################################
+###	Migration steps			               ###
+##############################################
+
+(main.py - Server)
+change url ip address to whereever the server is hosted
+
+(main.py - Pico)
+ensure pico main file is named main.py
+
+##############################################
+###	Running virtual environment	           ###
+##############################################
+
+From project root directory
+
+    .\env\Scripts\activate
+
+To exit:
+    deactivate
