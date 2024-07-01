@@ -6,11 +6,9 @@ from pydantic import BaseModel
 from database import SessionLocal, SensorData
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
+from datetime import datetime
 
 app = FastAPI()
-# templates = Jinja2Templates(directory="Templates")
-
-
 
 class SensorDataInput(BaseModel):
     temperature: float
@@ -30,6 +28,7 @@ templates = Jinja2Templates(directory=Path(__file__).parent.absolute() / "templa
 @app.post("/data/")
 def create_data(data: SensorDataInput, db: Session = Depends(get_db)):
     db_data = SensorData(
+	timestamp=datetime.now(),
         temperature=data.temperature,
         soil_moisture=data.soil_moisture,
     )
