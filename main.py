@@ -8,7 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 
 app = FastAPI()
-tempaltes = Jinja2Templates(directory="Templates")
+# templates = Jinja2Templates(directory="Templates")
 
 
 
@@ -25,6 +25,7 @@ def get_db():
 
 # Assuming 'static' folder is in the same directory as your main.py
 app.mount("/static", StaticFiles(directory=Path(__file__).parent.absolute() / "static"), name="static")
+templates = Jinja2Templates(directory=Path(__file__).parent.absolute() / "templates")
 
 @app.post("/data/")
 def create_data(data: SensorDataInput, db: Session = Depends(get_db)):
@@ -40,4 +41,4 @@ def create_data(data: SensorDataInput, db: Session = Depends(get_db)):
 @app.get("/", response_class=HTMLResponse)
 def read_root(request: Request, db: Session = Depends(get_db)):
     data = db.query(SensorData).order_by(SensorData.timestamp.desc()).all()
-    return tempaltes.TemplateResponse("index.html", {"request": request, "data": data})
+    return templates.TemplateResponse("index.html", {"request": request, "data": data})
